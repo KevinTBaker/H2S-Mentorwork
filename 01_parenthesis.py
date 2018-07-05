@@ -1,45 +1,41 @@
 import sys
-import string
 
-def makeCap(string):
+def	capitalize_other(string):
 	ret = ""
 	i = True
-	for char in string:
+	for c in string:
 		if i:
-			ret += char.upper()
-	else:
-		ret += char.lower()
-	if char != ' ':
-		i = not i
-	return(ret)
+			ret += c.upper()
+		else:
+			ret += c.lower()
+		if c.isalpha():
+			i = not i
+	return ret
 
-def replaceVowels(string):
-	vowels = ['A', 'E', 'I', 'O', 'U']
-	for vowel in vowels:
-		string = string.replace(vowel, '*')
-	return(string)
-def check_parenthesis(word):
-	stack = []
-	opening = ('(', '[', '{')
-	closing = (')', ']', '}')
-	mappings = dict(zip(opening, closing))
-	for char in word:
-		if char in opening:
-			stack.append(mappings[char])
-		elif char in closing:
-			if not stack or char != stack.pop():
-				return False
-	return not stack
+def	star_other_upcase_vowel(string):
+	vowels = "AEIOU"
+	ret = ""
+	for c in string:
+		if c in vowels and c.isupper():
+			ret += c
+	return ret
 
-def main(argv):
-	argc = len(argv)
-	if argc == 2:
-		caps = makeCap(argv[1])
-		print(caps)
-		replace = replaceVowels(caps)
-		print(replace)
-		parens = check_parenthesis(replace)
-		print("Balanced? {}".format(parens))
-	else:
-		print("Error: Invalid Input")
+def	check_parenthesis_balance(string):
+	open_count = 0
+	close_count = 0
+	for c in string:
+		if c == '(':
+			open_count += 1
+		elif c == ')':
+			close_count += 1
+	return open_count == close_count
+
+def	main(argv):
+	ac = len(argv)
+	print(ac)
+	if ac == 2:
+		print(capitalize_other(argv[1]))
+		print(star_other_upcase_vowel(capitalize_other(argv[1])))
+		print("Balanced? {}".format(check_parenthesis_balance(argv[1])))
+
 main(sys.argv)
